@@ -27,3 +27,9 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### Docker
+```
+docker build -t ethberlin/nazgul-metrics
+docker run -it -p 8080:8080 --rm --name nazgul-metrics ethberlin/nazgul-metrics
+```

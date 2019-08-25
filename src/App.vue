@@ -1,17 +1,19 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" class="container-fluid">
+    <Navbar/>
+    <Jumbotron/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Navbar from './components/Navbar.vue'
+import Jumbotron from './components/Jumbotron.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Navbar,
+    Jumbotron
   }
 }
 </script>
@@ -25,4 +27,11 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+.container-fluid {
+  margin-top: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
 </style>
