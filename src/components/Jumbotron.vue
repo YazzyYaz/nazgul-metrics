@@ -63,7 +63,7 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Inconsolata&display=swap");
 
 .jumbotron {
-    background-color: #33ff99 !important;
+    background-color: #7e898f !important;
     font-family: 'Yantramanav', sans-serif;
     color: black;
 }
