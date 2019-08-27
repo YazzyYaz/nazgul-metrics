@@ -3,38 +3,17 @@ import Vue from 'vue'
 import App from './App.vue'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-//import axios from 'axios';
-//import { library } from '@fortawesome/fontawesome-svg-core'
-//import { faCoffee} from '@fortawesome/free-solid-svg-icons'
-//import { faGithub, faTwitter, faMedium, faDiscord } from '@fortawesome/free-brands-svg-icons'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { dom } from '@fortawesome/fontawesome-svg-core'
-
+var newHeaders = {
+  'Authorization': 'Bearer ' + process.env.VUE_APP_WHITEBLOCK_SECRET,
+};
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+import JsonRpcVueClient from 'vue-json-rpc-client-fetch-withcredentials'
+Vue.use(JsonRpcVueClient, 'https://cors-anywhere.herokuapp.com/' + 'https://wb-etc-testnet.boxes.whiteblock.io:5001/rpc', 'omit', newHeaders);
 
 dom.watch()
-/*new Vue({
-  el: '#app',
-  render: h => h(App),
-  data () {
-    return {
-      info: '' 
-    }
-  },
-  filters: {
-    currencydecimal (value) {
-      return value.toFixed(2)
-    }
-  },
-  mounted () {
-    axios
-      .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-      .then(response => {
-        this.info = response.data.bpi
-      })
-   }
-})*/
 
 Vue.config.productionTip = false
 

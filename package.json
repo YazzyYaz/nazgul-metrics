@@ -16,9 +16,11 @@
     "bootstrap": "^4.3.1",
     "core-js": "^2.6.5",
     "jquery": "^3.4.1",
+    "js-jsonrpc-request": "^1.0.0",
     "popper.js": "^1.15.0",
     "vue": "^2.6.10",
-    "vue-axios": "^2.1.4"
+    "vue-axios": "^2.1.4",
+    "vue-json-rpc-client-fetch-withcredentials": "^1.4.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",

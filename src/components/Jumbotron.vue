@@ -18,43 +18,95 @@
 						Ethereum Classic and powered by the Whiteblock platform.
 					</h3>
             </div><br><hr><br>
-            <div class="row" v-for="currency in info" :key="currency.code">
             <div class="row">
-                <div class="col-sm-4">
-                   {{ currency.code }} 
-                </div>
-                <div class="col-sm-4">
-                   <span v-html="currency.symbol"></span>
-                </div>
-                <div class="col-sm-4">
-                    {{ currency.rate_float }}
-                </div>
+                <h3>Total Blocks: {{ info.blocks }}</h3>
             </div>
+            <div class="row">
+                <table class="table table-dark">
+                  <thead>
+                    <tr>
+                      <th scope="col">Metric</th>
+                      <th scope="col">Max</th>
+                      <th scope="col">Mean</th>
+                      <th scope="col">Standard Deviation</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">Block Time</th>
+                      <td>{{ info.blockTime.max }}</td>
+                      <td>{{ info.blockTime.mean }}</td>
+                      <td>{{ info.blockTime.standardDeviation }}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Difficulty</th>
+                      <td>{{ info.difficulty.max }}</td>
+                      <td>{{ info.difficulty.mean }}</td>
+                      <td>{{ info.difficulty.standardDeviation }}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Gas Limit</th>
+                      <td>{{ info.gasLimit.max }}</td>
+                      <td>{{ info.gasLimit.mean }}</td>
+                      <td>{{ info.gasLimit.standardDeviation }}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Gas Used</th>
+                      <td>{{ info.gasUsed.max }}</td>
+                      <td>{{ info.gasUsed.mean }}</td>
+                      <td>{{ info.gasUsed.standardDeviation }}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Total Difficulty</th>
+                      <td>{{ info.totalDifficulty.max }}</td>
+                      <td>{{ info.totalDifficulty.mean }}</td>
+                      <td>{{ info.totalDifficulty.standardDeviation }}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">TPS</th>
+                      <td>{{ info.tps.max }}</td>
+                      <td>{{ info.tps.mean }}</td>
+                      <td>{{ info.tps.standardDeviation }}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Transaction Per Block</th>
+                      <td>{{ info.transactionPerBlock.max }}</td>
+                      <td>{{ info.transactionPerBlock.mean }}</td>
+                      <td>{{ info.transactionPerBlock.standardDeviation }}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Uncle Count</th>
+                      <td>{{ info.uncleCount.max }}</td>
+                      <td>{{ info.uncleCount.mean }}</td>
+                      <td>{{ info.uncleCount.standardDeviation }}</td>
+                    </tr>
+
+                  </tbody>
+                </table>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import axios from 'axios';
+/*eslint no-console: ["error", { allow: ["warn", "error"] }] */
 
 export default {
   name: 'Jumbotron',
   data () {
     return {
-      info: '' 
+     info: '' 
     }
   },
   mounted () {
-    axios
-      .get('https://api.coindesk.com/v1/bpi/currentprice.json')
-      .then(response => (this.info = response.data.bpi))
+    this.$JsonRpcVueClient.request('all_stats', {})
+        .then(response => (this.info = response))
   },
   filters: {
-  currencydecimal (value) {
-    return value.toFixed(2)
-  }
-},
+    currencydecimal (value) {
+      return value.toFixed(2)
+    }
+  },
 };
 </script>
 
@@ -63,7 +115,7 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Inconsolata&display=swap");
 
 .jumbotron {
-    background-color: #7e898f !important;
+    background-color: #e06e5c !important;
     font-family: 'Yantramanav', sans-serif;
     color: black;
 }
