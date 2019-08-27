@@ -19,7 +19,7 @@
 					</h3>
             </div><br><hr><br>
             <div class="row">
-                <h3>Total Blocks: {{ info.blocks }}</h3>
+                <h3>Total Blocks: {{ blocksCount }}</h3>
             </div>
             <div class="row">
                 <table class="table table-dark">
@@ -31,56 +31,13 @@
                       <th scope="col">Standard Deviation</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody v-for="metric in info" :key="metric.stat">
                     <tr>
-                      <th scope="row">Block Time</th>
-                      <td>{{ info.blockTime.max }}</td>
-                      <td>{{ info.blockTime.mean }}</td>
-                      <td>{{ info.blockTime.standardDeviation }}</td>
+                      <th scope="row">{{ metric.stat }}</th>
+                      <td>{{ metric.max }}</td>
+                      <td>{{ Math.round(metric.mean * 100) / 100 }}</td>
+                      <td>{{ Math.round(metric.standardDeviation * 100) / 100 }}</td>
                     </tr>
-                    <tr>
-                      <th scope="row">Difficulty</th>
-                      <td>{{ info.difficulty.max }}</td>
-                      <td>{{ info.difficulty.mean }}</td>
-                      <td>{{ info.difficulty.standardDeviation }}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Gas Limit</th>
-                      <td>{{ info.gasLimit.max }}</td>
-                      <td>{{ info.gasLimit.mean }}</td>
-                      <td>{{ info.gasLimit.standardDeviation }}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Gas Used</th>
-                      <td>{{ info.gasUsed.max }}</td>
-                      <td>{{ info.gasUsed.mean }}</td>
-                      <td>{{ info.gasUsed.standardDeviation }}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Total Difficulty</th>
-                      <td>{{ info.totalDifficulty.max }}</td>
-                      <td>{{ info.totalDifficulty.mean }}</td>
-                      <td>{{ info.totalDifficulty.standardDeviation }}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">TPS</th>
-                      <td>{{ info.tps.max }}</td>
-                      <td>{{ info.tps.mean }}</td>
-                      <td>{{ info.tps.standardDeviation }}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Transaction Per Block</th>
-                      <td>{{ info.transactionPerBlock.max }}</td>
-                      <td>{{ info.transactionPerBlock.mean }}</td>
-                      <td>{{ info.transactionPerBlock.standardDeviation }}</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">Uncle Count</th>
-                      <td>{{ info.uncleCount.max }}</td>
-                      <td>{{ info.uncleCount.mean }}</td>
-                      <td>{{ info.uncleCount.standardDeviation }}</td>
-                    </tr>
-
                   </tbody>
                 </table>
             </div>
@@ -95,12 +52,34 @@ export default {
   name: 'Jumbotron',
   data () {
     return {
-     info: '' 
+     info: [],
+     blocksCount: '', 
     }
   },
   mounted () {
     this.$JsonRpcVueClient.request('all_stats', {})
-        .then(response => (this.info = response))
+        .then((response) => {
+            console.warn(response);
+            this.blocksCount = response.blocks;
+            this.blockTime = response.blockTime;
+            this.blockTime['stat'] = 'Block Time';
+            this.difficulty = response.difficulty;
+            this.difficulty['stat'] = 'Difficulty';
+            this.gasLimit = response.gasLimit;
+            this.gasLimit['stat'] = 'Gas Limit';
+            this.gasUsed = response.gasUsed;
+            this.gasUsed['stat'] = 'Gas Used';
+            this.totalDifficulty = response.totalDifficulty;
+            this.totalDifficulty['stat'] = 'Total Difficulty';
+            this.tps = response.tps;
+            this.tps['stat'] = 'Transactions Per Second';
+            this.transactionPerBlock = response.transactionPerBlock;
+            this.transactionPerBlock['stat'] = 'Transactions Per Block';
+            this.uncleCount = response.uncleCount;
+            this.uncleCount['stat'] = 'Uncle Count';
+            this.info = [];
+            this.info.push(this.blockTime, this.difficulty, this.gasLimit, this.gasUsed, this.totalDifficulty, this.tps, this.transactionPerBlock, this.uncleCount);
+        })
   },
   filters: {
     currencydecimal (value) {

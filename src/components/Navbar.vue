@@ -3,6 +3,9 @@
         <a class="navbar-brand text-link"  href="#">
             Nazgul
         </a>
+        <div>
+            <a href="https://github.com/eth-classic/nazgul"><font-awesome-icon :icon="['fab', 'github']" size="3x" :style="{ color: '#e06e5c' }"></font-awesome-icon><br><br></a>
+        </div>
     </nav>
 </template>
 
